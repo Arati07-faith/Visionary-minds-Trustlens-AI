@@ -56,10 +56,15 @@
     }, { threshold: 0.5 });
     progFills.forEach(f => progObserver.observe(f));
 
+    
+    document.addEventListener("DOMContentLoaded", () => {
 
-    const messages = document.getElementById("messages");
-const input = document.getElementById("userInput");
+  const messages = document.getElementById("messages");
+  const input = document.getElementById("userInput");
 
+  // ALL your code here
+
+});
 function addMessage(text, sender) {
     const msg = document.createElement("div");
     msg.className = "msg " + sender;
