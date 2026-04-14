@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trustlens AI</title>
+    <style>
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 20px;
+    font-size: 20px;
+    background: #f5f7fb; /* light background */
+    color: #1e293b;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1000px;
+    margin: auto;
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #2563eb;
+    font-size: 3.5em;
+}
+
+.subtitle {
+    text-align: center;
+    color: #64748b;
+    font-size: 1.3em;
+    margin-bottom: 40px;
+}
+
+.feature {
+    margin: 25px 0;
+    padding: 25px;
+    border-left: 5px solid #2563eb;
+    background: #f8fafc;
+    border-radius: 12px;
+    transition: 0.3s;
+}
+
+.feature:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(37,99,235,0.15);
+}
+
+button {
+    background: #2563eb;
+    color: white;
+    padding: 12px 20px;
+    font-size: 18px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #1d4ed8;
+}
+
+textarea, input {
+    width: 100%;
+    max-width: 500px;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    margin-top: 10px;
+    background: white;
+    color: black;
+}
+
+#chat {
+    border: 1px solid #cbd5e1;
+    height: 300px;
+    overflow-y: scroll;
+    padding: 15px;
+    background: #ffffff; /* WHITE chat background */
+    border-radius: 10px;
+}
+
+#chat p.user {
+    background: #dbeafe;
+    padding: 8px;
+    border-radius: 8px;
+    margin-left: 20%;
+}
+
+#chat p.ai {
+    background: #ede9fe;
+    padding: 8px;
+    border-radius: 8px;
+    margin-right: 20%;
+}
+
+.login {
+    text-align: center;
+    margin: 50px 0;
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 15px;
+    border: 1px solid #e2e8f0;
+}
+
+#badge {
+    font-size: 40px;
+    text-align: center;
+    color: #f59e0b;
+    font-weight: bold;
+}
+
+.trustlens-badge {
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 15px;
+    border-radius: 30px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.result {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.success {
+    background: #dcfce7;
+    border-left: 4px solid #22c55e;
+}
+
+.warning {
+    background: #fef3c7;
+    border-left: 4px solid #f59e0b;
+}
+
+.info {
+    background: #dbeafe;
+    border-left: 4px solid #3b82f6;
+}
+</style>
+</head>
+<body>
+    <div class="container">
+        <h1><a href="index.html">🔍 Trustlens AI</a></h1>
+        <p class="subtitle">Smart AI Assistant for Ethical Intelligence & Decision Making</p>
+        
+        <div class="login" id="login-section">
+            <h2>🚀 Access Trustlens Dashboard</h2>
+            <input type="text" placeholder="Enter Username" id="username">
+            <input type="password" placeholder="Enter Password" id="password">
+            <button onclick="login()">Launch Trustlens AI</button>
+        </div>
+        
+        <div id="main-content" style="display:none;">
+            <div class="trustlens-badge">🌟 Welcome to Trustlens AI - Your Smart Ethical Companion</div>
+            
+            <div class="feature">
+                <h3>1️⃣ Ethical Conflict Detection</h3>
+                <p>Advanced scanning for ethical dilemmas in real-time decisions.</p>
+                <textarea id="conflictText" rows="4" placeholder="Describe your scenario or decision..."></textarea>
+                <button onclick="detectConflict()">🔎 Analyze Conflicts</button>
+                <div id="conflictResult" class="result"></div>
+            </div>
+            
+            <div class="feature">
+                <h3>2️⃣ Bias Detector</h3>
+                <p>Precision bias identification across language and data.</p>
+                <textarea id="biasText" rows="4" placeholder="Input text or dataset sample..."></textarea>
+                <button onclick="detectBias()">📈 Detect Bias</button>
+                <div id="biasResult" class="result"></div>
+            </div>
+            
+            <div class="feature">
+                <h3>3️⃣ Smart Translation</h3>
+                <p>Context-aware multilingual translation engine.</p>
+                <input type="text" id="engText" placeholder="Enter text to translate">
+                <button onclick="translateSmart()">🤖 Translate Smartly</button>
+                <div id="translateResult" class="result"></div>
+            </div>
+            
+            <div class="feature">
+                <h3>4️⃣ Multi-AI Inspector</h3>
+                <p>Comprehensive transparency audit for AI ecosystems.</p>
+                <button onclick="inspectAI()">🛡️ Full System Audit</button>
+                <div id="aiResult" class="result info">Audit ready. Click to scan.</div>
+            </div>
+            
+            <div class="feature">
+                <h3>5️⃣ AI Assistant</h3>
+                <p>Intelligent conversational partner for complex queries.</p>
+                <div id="chat"></div>
+                <div style="display:flex; gap:10px;">
+                    <input type="text" id="chatInput" placeholder="Chat with Trustlens AI..." onkeypress="if(event.key==='Enter') sendMessage()">
+                    <button onclick="sendMessage()">📤 Send</button>
+                </div>
+            </div>
+            
+            <div class="feature">
+                <h3>6️⃣ Achievement Badges</h3>
+                <p>Smart badges for milestones and ethical achievements.</p>
+                <div id="badge">🏆 Ethical Pioneer</div>
+                <button onclick="earnBadge()">🎖️ Earn Elite Badge</button>
+            </div>
+            
+            <div class="feature">
+                <h3>7️⃣ AI Thinker</h3>
+                <p>Deep reasoning engine for strategic insights.</p>
+                <button onclick="think()">🧠 Activate Deep Think</button>
+                <div id="thinkResult" class="result"></div>
+            </div>
+            
+            <div class="feature">
+                <h3>8️⃣ Confusion Detector</h3>
+                <p>Identifies logical confusion and ambiguity instantly.</p>
+                <textarea id="confusedText" rows="4" placeholder="Potentially confusing input..."></textarea>
+                <button onclick="detectConfused()">❓ Scan for Confusion</button>
+                <div id="confusedResult" class="result"></div>
+            </div>
+            
+            <div class="feature">
+                <h3>9️⃣ Personal Insights</h3>
+                <p>AI-powered personalized worldview analysis.</p>
+                <button onclick="personalView()">👤 Generate My View</button>
+                <div id="personalResult" class="result info">Personalized insights loading...</div>
+            </div>
+            
+            <div class="feature">
+                <h3>🔟 Emotional Intelligence</h3>
+                <p>Advanced emotion recognition and response optimization.</p>
+                <input type="text" id="emotionText" placeholder="Share your current state...">
+                <button onclick="analyzeEmotion()">💖 Analyze Emotions</button>
+                <div id="emotionResult" class="result success"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const responses = {
+            ai: ['Excellent question! Trustlens AI prioritizes ethical decision-making.', 
+                 'Analyzing... This aligns with best practices for responsible AI.', 
+                 'Insightful! Here\\s my ethical assessment:', 
+                 'Smart query. Transparency is key in AI systems.',
+                 'Processing ethically... All clear!'],
+            think: ['Strategic insight: Balance innovation with responsibility.',
+                    'Deep thought: Ethical frameworks enhance AI trustworthiness.',
+                    'Reasoning complete: Prioritize human values in AI design.',
+                    'AI perspective: Multi-stakeholder transparency builds confidence.']
+        };
+
+        function login() {
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            if (user && pass) {
+                document.getElementById('login-section').style.display = 'none';
+                document.getElementById('main-content').style.display = 'block';
+            } else {
+                alert('Enter credentials to unlock Trustlens AI');
+            }
+        }
+
+        function detectConflict() {
+            document.getElementById('conflictResult').innerHTML = '<strong class="warning">⚠️ Ethical Risk: MEDIUM</strong><br>Potential conflict between efficiency and fairness detected.';
+            document.getElementById('conflictResult').className = 'result warning';
+        }
+
+        function detectBias() {
+            document.getElementById('biasResult').innerHTML = '<strong class="warning">📊 Bias Level: 8.4%</strong><br>Minor representational bias identified - recommend dataset balancing.';
+            document.getElementById('biasResult').className = 'result warning';
+        }
+
+        function translateSmart() {
+            const text = document.getElementById('engText').value || 'Hello World';
+            document.getElementById('translateResult').innerHTML = `<strong>✅ Smart Translation:</strong><br>${text} → Translated with contextual accuracy (API integration ready)`;
+            document.getElementById('translateResult').className = 'result success';
+        }
+
+        function inspectAI() {
+            document.getElementById('aiResult').innerHTML = '<strong class="success">🟢 Audit Complete: 96% Transparent</strong><br>All AI components verified for explainability.';
+            document.getElementById('aiResult').className = 'result success';
+        }
+
+      function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const msg = input.value.trim();
+            if (!msg) return;
+            const chat = document.getElementById('chat');
+            chat.innerHTML += `<p class="user"><strong>You:</strong> ${msg}</p>`;
+            setTimeout(() => {
+                const reply = responses.ai[Math.floor(Math.random() * responses.ai.length)];
+                chat.innerHTML += `<p class="ai"><strong>Trustlens AI:</strong> ${reply}</p>`;
+                chat.scrollTop = chat.scrollHeight;
+            }, 800);
+            input.value = '';
+        }
+
+        function earnBadge() {
+            const badges = ['🏆 Ethical Master', '🔥 Trust Guardian Elite', '💎 AI Integrity Pro'];
+            document.getElementById('badge').textContent = badges[Math.floor(Math.random() * badges.length)];
+        }
+
+        function think() {
+            const thought = responses.think[Math.floor(Math.random() * responses.think.length)];
+            document.getElementById('thinkResult').innerHTML = `<strong>🧠 Deep Thought:</strong> ${thought}`;
+            document.getElementById('thinkResult').className = 'result info';
+        }
+
+        function detectConfused() {
+            document.getElementById('confusedResult').innerHTML = '<strong class="warning">🌀 Confusion Score: HIGH</strong><br>Ambiguous logic detected - suggest clarification.';
+            document.getElementById('confusedResult').className = 'result warning';
+        }
+
+        function personalView() {
+            document.getElementById('personalResult').innerHTML = '<strong class="success">👤 Your Ethical Profile:</strong><br>92% alignment with responsible AI principles.';
+            document.getElementById('personalResult').className = 'result success';
+        }
+
+        function analyzeEmotion() {
+            document.getElementById('emotionResult').innerHTML = '<strong class="success">💖 Emotion Analysis:</strong><br>Balanced state detected. Optimal for decision-making.';
+            document.getElementById('emotionResult').className = 'result success';
+        }
+    </script>
+</body>
+</html>
